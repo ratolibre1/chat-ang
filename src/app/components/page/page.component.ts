@@ -56,7 +56,6 @@ export class PageComponent implements OnDestroy {
         newLastMessage = this.messages[this.messages.length - 1];
       }
 
-      console.log('LAST MESSAGES', lastMessage, newLastMessage);
       if (lastMessage.timestamp != newLastMessage.timestamp) {
         this.scrollToBottom();
       }
@@ -68,14 +67,12 @@ export class PageComponent implements OnDestroy {
   }
 
   scrollToBottom(): void {
-    console.log('SCROLLING');
     try {
       this.messageContainer.nativeElement.scrollTop =
         this.messageContainer.nativeElement.scrollHeight;
     } catch (err) {
       console.log(err);
     }
-    console.log('SCROLLING SUCCESSFUL');
   }
 
   async onSubmit(): Promise<void> {
