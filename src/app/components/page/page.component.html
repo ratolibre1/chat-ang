@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="column left" style="background-color: #aaa">
+    <div class="login-form">
+      <h2>Login</h2>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="Enter your e-mail"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            formControlName="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+        <button type="submit" [disabled]="loginForm?.invalid">Login</button>
+      </form>
+    </div>
+  </div>
+  <div
+    *ngIf="showChatrooms"
+    class="column middle"
+    style="background-color: #bbb"
+  >
+    <h2>Available Chatrooms</h2>
+    <div *ngFor="let chatroom of chatrooms">
+      <div class="chatroom">
+        <h2>{{ chatroom.name }}</h2>
+        <p>{{ chatroom.desc }}</p>
+        <button (click)="enterChatRoom(chatroom.code)">Enter</button>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="showChat" class="column right" style="background-color: #ccc">
+    <h2>Chat</h2>
+    <div class="message-container" #messageContainer>
+      <img
+        style="display: none"
+        (load)="onContentLoaded()"
+        src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
+      />
+      <div *ngFor="let message of messages">
+        <div class="message">
+          <p style="font-family: 'Lucida Console', monospace">
+            {{ message.sender }} |
+            <small> {{ message.timestamp | date : "medium" }}</small>
+          </p>
+          <p>{{ message.content }}</p>
+          <hr />
+        </div>
+      </div>
+    </div>
+    <div class="message-input">
+      <textarea
+        [(ngModel)]="newMessage"
+        placeholder="Type your message..."
+        (keydown.enter)="sendMessage()"
+      ></textarea>
+      <button (click)="sendMessage()">Send</button>
+    </div>
+  </div>
+</div>
